@@ -1,11 +1,19 @@
 from math import floor
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import shapely
 from cartopy import crs as ccrs
 from matplotlib import patheffects
 import numpy as np
+from matplotlib.font_manager import FontProperties
+from matplotlib.transforms import Bbox
 from shapely.geometry import Point
+from scipy import ndimage
+
+import matplotlib.image as mpimage
+
+
 
 
 def utm_from_lon(lon):
@@ -50,27 +58,46 @@ def scale_bar(ax, proj, length, location=(0.5, 0.05), linewidth=3,
     # buffer for text
     buffer = [patheffects.withStroke(linewidth=1, foreground="w")]
     # Plot the scalebar label
-    t0 = ax.text(sbcx, sbcy, str(length) + ' ' + units, transform=utm,
+    t0 = ax.text(sbcx, sbcy + (y1 - y0) * 0.03, str(length) + ' ' + units, transform=utm,
         horizontalalignment='center', verticalalignment='bottom',
         path_effects=buffer, zorder=2, fontdict=dict(size=fontsize))
     left = x0+(x1-x0)*0.05
-    right = x1 - (x1 - x0) * 0.05
+    right = x1 - (x1 - x0) * 0.1
     # Plot the N arrow
     # t1 = ax.text(left, sbcy, u'\u25B2\nN', transform=utm,
     #     horizontalalignment='center', verticalalignment='bottom',
     #     path_effects=buffer, zorder=2)
 
 
-    arrow_start_geo = list(utm.as_geodetic().transform_point(right, sbcy, src_crs=utm))
-    arrow_start_geo[1] += 0.01
+    arrow_start_geo = utm.as_geodetic().transform_point(right, sbcy + (y1 - y0) * 0.1, src_crs=utm)
     arrow_end_geo = (arrow_start_geo[0], arrow_start_geo[1] + 0.05)
 
-    transform = ccrs.PlateCarree()._as_mpl_transform(ax)
-    ax.annotate("N", xy=arrow_end_geo, xycoords=transform, textcoords=transform,
-                xytext=arrow_start_geo,
-                #arrowprops=dict(facecolor='black', headlength=40),
-                arrowprops=dict(arrowstyle="fancy", color="k", lw=1, mutation_scale=30),
-                ha="center", va="top")
+    # transform = ccrs.PlateCarree()._as_mpl_transform(ax)
+    # a = ax.annotate("N", xy=arrow_end_geo, xycoords=transform,
+    #             xytext=arrow_start_geo, textcoords=transform,
+    #             #arrowprops=dict(facecolor='black', headlength=40),
+    #             arrowprops=dict(arrowstyle="fancy", color="k", lw=1, shrinkA=5, shrinkB=5),
+    #             ha="center", va="top", width=3,
+    #             font_properties=FontProperties(size=fontsize))
+
+
+
+    # add the arrow image
+    arrow_extent = (right - 0.05 * (x1 - x0), right, sbcy, sbcy + (y1 - y0) * 0.1)
+
+
+    north_arrow_path = Path(__file__).parent.parent.parent / "north_arrow.png"
+    img = mpimage.imread(str(north_arrow_path), format="png")
+    img = ndimage.rotate(img, 180)
+    # img = ndimage.rotate(img, 45)
+    plt.imshow(img,
+              extent=arrow_extent, zorder=10,
+              transform=utm, origin="lower")
+
+    transform = utm._as_mpl_transform(ax)
+    ax.annotate("N", xy=(sum(arrow_extent[:2]) * 0.5, arrow_extent[-1]),
+                ha="center", va="bottom", xycoords=transform,
+                font_properties=FontProperties(size=fontsize))
 
     print(left, sbcy)
     print(arrow_start_geo[::-1], arrow_end_geo[::-1])
@@ -87,7 +114,7 @@ if __name__ == '__main__':
     ax.stock_img()
     ax.coastlines(resolution='10m')
 
-    scale_bar(ax, ccrs.Mercator(), 100)  # 100 km scale bar
+    scale_bar(ax, ccrs.Mercator(), 100, fontsize=20)  # 100 km scale bar
     # or to use m instead of km
     # scale_bar(ax, ccrs.Mercator(), 100000, m_per_unit=1, units='m')
     # or to use miles instead of km

@@ -90,9 +90,9 @@ def main():
         ("Charlottetown", (46.2389900, -63.1341400))
     ])
 
-    cities = OrderedDict([
-        ("Toronto", (43.653908, -79.384293)),
-    ])
+    # cities = OrderedDict([
+    #     ("Toronto", (43.653908, -79.384293)),
+    # ])
 
     # cities = ["city of Calgary, Alberta, Canada"]
 
@@ -162,14 +162,14 @@ def main():
         #                linewidth=0.5, facecolor=feature.COLORS["water"],
         #                edgecolor=feature.COLORS["water"])
 
-        scale_bar(ax, crs, length=5, fontsize=5)
+        scale_bar(ax, crs, length=10, fontsize=5, location=(0.5, 0.06), linewidth=1)
 
         ax.set_title(city, fontsize=5)
 
 
-    png_low = True
+    png_low = False
     if not png_low:
-        fig.savefig("buildings_by_point_10_dpi300.pdf", dpi=300, bbox_inches="tight")
+        fig.savefig("buildings_by_point_10_dpi300.pdf", dpi=300, bbox_inches="tight", transparent=True)
     else:
         fig.savefig("buildings_by_point_11_dpi300.png", dpi=300, bbox_inches="tight")
 
