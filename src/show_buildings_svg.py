@@ -30,7 +30,7 @@ def reset_extents(city_to_extent, r_max_x, r_max_y):
 
 
 def download_buildings_cached_for(city_name, cities_dict, radius_m):
-    cache_dir = Path("../cache")
+    cache_dir = Path(__file__).parent.parent / "cache"
     cache_dir.mkdir(exist_ok=True)
 
     cache_file = cache_dir / f"{city_name}_{radius_m}.bin"
@@ -45,8 +45,9 @@ def download_buildings_cached_for(city_name, cities_dict, radius_m):
 
 
 def add_river_shapes(ax, city, crs=None):
-    data_dir = Path(__file__).parent.parent / "/canvec_250K/"
+    data_dir = Path(__file__).parent.parent / "canvec_250K"
 
+    print(f"River shapes are from {data_dir}")
     city_to_province = {
         "Toronto": "ON",
         "Montreal": "QC",
@@ -71,7 +72,9 @@ def add_river_shapes(ax, city, crs=None):
 
 
 
-def plot_cities_in_svg(cities: dict, out_dir="../svg_out", radius_m=2000):
+def plot_cities_in_svg(cities: dict, out_dir=None, radius_m=2000):
+    if out_dir is None:
+        out_dir = Path(__file__).parent.parent / "out_svg"
 
     fig_dir = Path(out_dir)
     fig_dir.mkdir(exist_ok=True)

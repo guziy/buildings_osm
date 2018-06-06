@@ -26,6 +26,10 @@ def north_arrow(img_file_in: Path, img_file_out: Path=None, rotation_angle=0):
     plot2.moveto(0.9 * w, 0.8 * h, scale=0.05)
     plot2.scale_xy(x=0.5, y=1)
 
+
+    n_text = sg.TextElement(0.9 * w, 0.7 * h, "N", size=12, weight="bold")
+
     fig.append([plot1, plot2])
+    fig.append([n_text, ])
 
     fig.save(str(img_file_out))
