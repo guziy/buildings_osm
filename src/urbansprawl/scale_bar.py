@@ -15,7 +15,6 @@ import matplotlib.image as mpimage
 
 
 
-
 def utm_from_lon(lon):
     """
     utm_from_lon - UTM zone for a longitude
@@ -86,8 +85,8 @@ def scale_bar(ax, proj, length, location=(0.5, 0.05), linewidth=3,
     arrow_extent = (right - 0.05 * (x1 - x0), right, sbcy, sbcy + (y1 - y0) * 0.1)
 
 
-    north_arrow_path = Path(__file__).parent.parent.parent / "north_arrow.png"
-    img = mpimage.imread(str(north_arrow_path), format="png")
+    north_arrow_path = Path(__file__).parent.parent.parent / "north_arrow.svg"
+    img = mpimage.imread(str(north_arrow_path), format="svg")
     img = ndimage.rotate(img, 180)
     # img = ndimage.rotate(img, 45)
     plt.imshow(img,
