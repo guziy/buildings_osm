@@ -7,9 +7,15 @@ import osmnx as ox
 # Retrieve OSM data
 from cartopy.feature import NaturalEarthFeature
 from cartopy.io.shapereader import Reader
+
+
+import matplotlib
+matplotlib.use("Agg")
+
 from matplotlib.gridspec import GridSpec
 
 import matplotlib.pyplot as plt
+
 
 from cartopy import crs as ccrs
 from cartopy import feature
@@ -17,6 +23,12 @@ from cartopy import feature
 from north_arrow_svg import north_arrow
 from scale_bar_only import scale_bar_only
 from urbansprawl.scale_bar import scale_bar
+
+# Description:
+
+# Plots buildings for each city in a separate svg file
+# Adds a north arrow to the previously generated svg files
+# Puts the svg files (containing the north arrow) into panels of a panel plot.
 
 
 def reset_extents(city_to_extent, r_max_x, r_max_y):
@@ -79,7 +91,6 @@ def plot_cities_in_svg(cities: dict, out_dir=None, radius_m=2000):
     fig_dir = Path(out_dir)
     fig_dir.mkdir(exist_ok=True)
 
-
     # Define the CartoPy CRS object.
     crs = ccrs.Miller()
     # This can be converted into a `proj4` string/dict compatible with GeoPandas
@@ -87,7 +98,6 @@ def plot_cities_in_svg(cities: dict, out_dir=None, radius_m=2000):
 
     city_to_data = OrderedDict()
     city_to_extent = OrderedDict()
-
 
     # get the data and compute some things
     for ci, city in enumerate(cities):
