@@ -34,10 +34,13 @@ def north_arrow(img_file_in: Path, img_file_out: Path=None, rotation_angle=0):
     print(fig2.get_size())
     x_label = 0.9 * w
     y_label = 0.8 * h
-    plot2.scale_xy(x=0.5 * 0.05, y=0.05)
+
+    kx = 0.5 * 0.05
+    ky = 0.05
+    plot2.scale_xy(x=kx, y=ky)
 
     w_fig2, h_fig2 = get_fig_size(fig2)
-    plot2.moveto(x_label - w_fig2 / 2, y_label)
+    plot2.moveto(x_label - w_fig2 * kx / 2, y_label)
 
     print(fig2.get_size())
 
