@@ -1,3 +1,8 @@
+
+import matplotlib
+matplotlib.use("Agg")
+
+
 import pickle
 from collections import OrderedDict
 from pathlib import Path
@@ -9,8 +14,6 @@ from cartopy.feature import NaturalEarthFeature
 from cartopy.io.shapereader import Reader
 
 
-import matplotlib
-matplotlib.use("Agg")
 
 from matplotlib.gridspec import GridSpec
 
