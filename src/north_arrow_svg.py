@@ -51,4 +51,6 @@ def north_arrow(img_file_in: Path, img_file_out: Path=None, rotation_angle=0):
     fig.append([plot1, plot2])
     fig.append([n_text, ])
 
+    fig.set_size(fig1.get_size())
+
     fig.save(str(img_file_out))
