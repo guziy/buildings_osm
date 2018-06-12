@@ -34,8 +34,8 @@ def calculate_annual_max_temperature(data_root: Path):
             arr_data = ds["lst_day"].max(dim="time").to_masked_array().squeeze()
 
             if lons is None:
-                lons = ds["lons"].values
-                lats = ds["lats"].values
+                lons = ds["lon"].values
+                lats = ds["lat"].values
 
             data_list.append(
                 np.ma.masked_where(arr_data >= 200, arr_data)
