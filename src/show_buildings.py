@@ -28,7 +28,7 @@ def reset_extents(city_to_extent, r_max_x, r_max_y):
 
 
 def download_buildings_cached_for(city_name, cities_dict, radius_m):
-    cache_dir = Path("../cache")
+    cache_dir = Path(__file__).parent.parent / "cache"
     cache_dir.mkdir(exist_ok=True)
 
     cache_file = cache_dir / f"{city_name}_{radius_m}.bin"
