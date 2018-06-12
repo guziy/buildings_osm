@@ -55,6 +55,7 @@ def calculate_annual_max_temperature(data_root: Path):
             data_list.append(
                 np.ma.masked_where(arr_data >= 200, arr_data)
             )
+            break
 
     # get the average over available years
     arr_mean = np.ma.mean(data_list, axis=0)
