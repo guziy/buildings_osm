@@ -14,7 +14,7 @@ def calculate_annual_max_temperature(cities: dict, data_root: Path):
         if not yr_dir.is_dir():
             continue
 
-        data_files = yr_dir / "MODIS-C06__MOD11C1__DAILY__LandSurfaceTemperature__0.05deg__UHAM-ICDC__20001218*.nc4"
+        data_files = yr_dir / "MODIS-C06__MOD11C1__DAILY__LandSurfaceTemperature__0.05deg__UHAM-ICDC__*.nc4"
 
         data_files_s = str(data_files)
 
