@@ -13,7 +13,7 @@ from matplotlib.colors import BoundaryNorm
 from matplotlib.gridspec import GridSpec
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-from show_buildings import download_buildings_cached_for, add_river_shapes
+from show_buildings import download_buildings_cached_for, add_river_shapes, reset_extents
 import numpy as np
 
 
@@ -99,6 +99,8 @@ def main(cities: dict, radius_m=20000,
         minx, miny, maxx, maxy = blds.total_bounds
         city_to_extent[city] = [minx, maxx, miny, maxy]
 
+        reset_extents(city_to_extent,r_max_x=radius_m, r_max_y=radius_m)
+
 
     ncols = 3
     nrows = len(cities) // 3 + int(len(cities) % ncols > 0)
@@ -122,16 +124,17 @@ def main(cities: dict, radius_m=20000,
 
         # Plot
         print(f"Plotting {city}")
+        print(city_to_extent[city])
 
-        cs = ax.contourf(lons, lats, tmax_mean, levels=levels, norm=bn, cmap=cmap)
+        cs = ax.contourf(lons, lats, tmax_mean, levels=levels, norm=bn, cmap=cmap, extend="both")
 
         divider = make_axes_locatable(ax)
         ax_cb = divider.new_horizontal(size="5%", pad=0.1, axes_class=plt.Axes)
         fig.add_axes(ax_cb)
-        cb = plt.colorbar(cs, cax=ax_cb, extend="both")
+        cb = plt.colorbar(cs, cax=ax_cb)
+        cb.ax.tick_params(labelsize=5)
 
-        cb.ax.tick_params(labelsize=10)
-
+        ax.add_geometries(blds['geometry'], crs=crs, facecolor="k", edgecolor="none", linewidth=0, alpha=0.3)
         ax.set_extent(city_to_extent[city], crs=projection)
 
         ax.get_xaxis().set_visible(False)
