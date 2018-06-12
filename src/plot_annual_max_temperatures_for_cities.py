@@ -99,7 +99,6 @@ def main(cities: dict, radius_m=20000,
         minx, miny, maxx, maxy = blds.total_bounds
         city_to_extent[city] = [minx, maxx, miny, maxy]
 
-        reset_extents(city_to_extent,r_max_x=radius_m, r_max_y=radius_m)
 
 
     ncols = 3
