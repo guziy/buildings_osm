@@ -1,5 +1,8 @@
 
 import matplotlib
+
+from show_buildings import download_buildings_cached_for, add_river_shapes
+
 matplotlib.use("Agg")
 
 
@@ -43,47 +46,6 @@ def reset_extents(city_to_extent, r_max_x, r_max_y):
 
         city_to_extent[city] = new_ext
 
-
-def download_buildings_cached_for(city_name, cities_dict, radius_m):
-    cache_dir = Path(__file__).parent.parent / "cache"
-    cache_dir.mkdir(exist_ok=True)
-
-    cache_file = cache_dir / f"{city_name}_{radius_m}.bin"
-
-    if cache_file.exists():
-        return pickle.load(cache_file.open("rb"))
-
-    blds = ox.buildings_from_point(cities_dict[city_name], radius_m, retain_invalid=True)
-
-    pickle.dump(blds, cache_file.open("wb"))
-    return blds
-
-
-def add_river_shapes(ax, city, crs=None):
-    data_dir = Path(__file__).parent.parent / "canvec_250K"
-
-    print(f"River shapes are from {data_dir}")
-    city_to_province = {
-        "Toronto": "ON",
-        "Montreal": "QC",
-        "Ottawa-Gatineau": "ON",
-        "Vancouver": "BC",
-        "Calgary": "AB",
-        "Edmonton": "AB",
-        "Winnipeg": "MB",
-        "Halifax": "NS",
-        "Saskatoon": "SK",
-        "Moncton": "NB",
-        "Charlottetown": "PE"
-
-    }
-
-    params = dict(facecolor=feature.COLORS["water"], linewidth=0)
-    for province_dir in data_dir.iterdir():
-        if province_dir.is_dir() and city_to_province[city] in province_dir.name:
-            for f in (province_dir / province_dir.name[:-4]).iterdir():
-                if f.name.startswith("waterbody_2") and f.name.endswith(".shp"):
-                    ax.add_geometries(Reader(str(f)).geometries(), crs, **params)
 
 
 

@@ -4,7 +4,10 @@ from pathlib import Path
 from cartopy import crs as ccrs
 import xarray
 import matplotlib.pyplot as plt
+from matplotlib import cm
+from matplotlib.colors import BoundaryNorm
 from matplotlib.gridspec import GridSpec
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 from show_buildings import download_buildings_cached_for, add_river_shapes
 import numpy as np
@@ -100,6 +103,11 @@ def main(cities: dict, radius_m=20000,
 
     fig = plt.figure(figsize=(6, 6), frameon=False)
 
+
+    levels = [0, 2, 4, 6, 10, 15, 20, 25, 30, 35, 40, 45]
+    bn = BoundaryNorm(levels, len(levels) - 1)
+    cmap = cm.get_cmap("jet", len(levels) - 1)
+
     # plotting
     for ci, city in enumerate(cities):
         row = ci // ncols
@@ -112,8 +120,13 @@ def main(cities: dict, radius_m=20000,
         print(f"Plotting {city}")
 
 
-        cs = ax.contourf(lons, lats, tmax_mean)
-        plt.colorbar(cs)
+        cs = ax.contourf(lons, lats, tmax_mean, levels=levels, norm=bn, cmap=cmap)
+
+        divider = make_axes_locatable(ax)
+        ax_cb = divider.new_vertical(size="5%", pad=0.1, axes_class=plt.Axes)
+        fig.add_axes(ax_cb)
+        cb = plt.colorbar(cs, extend="both", cax=ax_cb)
+
 
         ax.set_extent(city_to_extent[city], crs=projection)
 
