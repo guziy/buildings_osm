@@ -132,6 +132,7 @@ def main(cities: dict, radius_m=20000,
         fig.add_axes(ax_cb)
         cb = plt.colorbar(cs, cax=ax_cb)
         cb.ax.tick_params(labelsize=5)
+        cb.ax.set_visible(city.lower() == "toronto")
 
         ax.add_geometries(blds['geometry'], crs=crs, facecolor="k", edgecolor="none", linewidth=0, alpha=0.3)
         ax.set_extent(city_to_extent[city], crs=projection)
