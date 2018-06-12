@@ -27,7 +27,7 @@ def calculate_annual_max_temperature(data_root: Path):
             plt.figure()
             cs = plt.contourf(arr_data.T)
             plt.colorbar(cs)
-            plt.show()
+            plt.savefig("test_plot.png")
 
             if True:
                 raise Exception
