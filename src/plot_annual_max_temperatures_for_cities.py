@@ -20,6 +20,8 @@ def calculate_annual_max_temperature(data_root: Path):
 
         with xarray.open_mfdataset(data_files_s) as ds:
 
+            print(ds["lst_day"])
+
             arr_data = ds["lst_day"].max(dim="time").to_masked_array()
 
             plt.figure()
