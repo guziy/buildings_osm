@@ -23,7 +23,7 @@ def calculate_annual_max_temperature(cities: dict, data_root: Path):
             arr_data = ds["lst_day"].to_masked_array()
 
             plt.figure()
-            cs = plt.contourf(arr_data)
+            cs = plt.contourf(arr_data.max(axis=0).T)
             plt.colorbar(cs)
             plt.show()
 
