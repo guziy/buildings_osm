@@ -27,7 +27,7 @@ def calculate_annual_max_temperature(data_root: Path):
         yr_max_cache = yr_dir / "max_cache.bin"
         if yr_max_cache.exists():
             print(f"Reusing cache from {yr_max_cache}")
-            arr_data = pickle.load(str(yr_max_cache))
+            arr_data = pickle.load(yr_max_cache.open("rb"))
 
         data_files = yr_dir / "MODIS-C06__MOD11C1__DAILY__LandSurfaceTemperature__0.05deg__UHAM-ICDC__*.nc4"
 
