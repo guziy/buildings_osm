@@ -1,3 +1,4 @@
+import pickle
 from collections import OrderedDict
 from pathlib import Path
 from cartopy import crs as ccrs
@@ -19,19 +20,30 @@ def calculate_annual_max_temperature(data_root: Path):
 
         print(yr_dir)
 
+        arr_data = None
         if not yr_dir.is_dir():
             continue
+
+        yr_max_cache = yr_dir / "max_cache.bin"
+        if yr_max_cache.exists():
+            print(f"Reusing cache from {yr_max_cache}")
+            arr_data = pickle.load(str(yr_max_cache))
 
         data_files = yr_dir / "MODIS-C06__MOD11C1__DAILY__LandSurfaceTemperature__0.05deg__UHAM-ICDC__*.nc4"
 
         data_files_s = str(data_files)
 
-
-        with xarray.open_mfdataset(data_files_s) as ds:
+        with xarray.open_mfdataset(data_files_s, data_vars="minimal", coords="minimal") as ds:
 
             print(ds["lst_day"])
 
-            arr_data = ds["lst_day"].max(dim="time").to_masked_array().squeeze()
+            # read in the data if it were not yet retrieved from cache
+            if arr_data is None:
+                arr_data = ds["lst_day"].max(dim="time").to_masked_array().squeeze()
+
+                #cache it for the next run
+                pickle.dump(arr_data, yr_max_cache.open("wb"))
+
 
             if lons is None:
                 lons = ds["lon"].values
@@ -113,6 +125,7 @@ def main(cities: dict, radius_m=20000,
         add_river_shapes(ax, city, crs=ccrs.PlateCarree())
 
     fig.savefig("cities_tmax.png", dpi=300, bbox_inches="tight")
+
 
 def test():
     cities = OrderedDict([
