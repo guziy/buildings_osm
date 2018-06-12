@@ -4,7 +4,7 @@ from cartopy import crs as ccrs
 import xarray
 import matplotlib.pyplot as plt
 
-def calculate_annual_max_temperature(cities: dict, data_root: Path):
+def calculate_annual_max_temperature(data_root: Path):
     # calculate for each year
 
     for yr_dir in data_root.iterdir():
@@ -20,7 +20,7 @@ def calculate_annual_max_temperature(cities: dict, data_root: Path):
 
         with xarray.open_mfdataset(data_files_s) as ds:
 
-            arr_data = ds["lst_day"].to_masked_array()
+            arr_data = ds["lst_day"].max(dim="time").to_masked_array()
 
             plt.figure()
             cs = plt.contourf(arr_data.max(axis=0).T)
@@ -46,7 +46,7 @@ def main(cities: dict, radius_m=20000,
 
     data_root = Path("/scratch/huziy/MODIS_hambourg/DAILY")
 
-    tmax_mean = calculate_annual_max_temperature(cities=cities, data_root=data_root)
+    tmax_mean = calculate_annual_max_temperature(data_root=data_root)
 
 
 def test():
