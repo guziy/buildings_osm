@@ -105,7 +105,7 @@ def main(cities: dict, radius_m=20000,
     fig = plt.figure(figsize=(6, 6), frameon=False)
 
 
-    levels = [0, 2, 4, 6, 10, 15, 20, 25, 30, 35, 40, 45]
+    levels = np.arange(20, 45, 0.5)
     bn = BoundaryNorm(levels, len(levels) - 1)
     cmap = cm.get_cmap("jet", len(levels) - 1)
 
