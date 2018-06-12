@@ -9,6 +9,8 @@ def calculate_annual_max_temperature(cities: dict, data_root: Path):
 
     for yr_dir in data_root.iterdir():
 
+        print(yr_dir)
+
         if not yr_dir.is_dir():
             continue
 
