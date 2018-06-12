@@ -43,7 +43,7 @@ def download_buildings_cached_for(city_name, cities_dict, radius_m):
 
 
 def add_river_shapes(ax, city, crs=None):
-    data_dir = Path("../canvec_250K/")
+    data_dir = Path(__file__).parent.parent / "canvec_250K"
 
     city_to_province = {
         "Toronto": "ON",
