@@ -124,9 +124,9 @@ def main(cities: dict, radius_m=20000,
         cs = ax.contourf(lons, lats, tmax_mean, levels=levels, norm=bn, cmap=cmap)
 
         divider = make_axes_locatable(ax)
-        ax_cb = divider.new_vertical(size="5%", pad=0.1, axes_class=plt.Axes)
+        ax_cb = divider.new_horizontal(size="5%", pad=0.1, axes_class=plt.Axes)
         fig.add_axes(ax_cb)
-        cb = plt.colorbar(cs, extend="both", cax=ax_cb)
+        cb = plt.colorbar(cs, cax=ax_cb)
 
 
         ax.set_extent(city_to_extent[city], crs=projection)
