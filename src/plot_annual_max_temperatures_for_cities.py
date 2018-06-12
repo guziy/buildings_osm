@@ -83,6 +83,7 @@ def main(cities: dict, radius_m=20000,
 
 
     city_to_extent = OrderedDict()
+    city_to_blds = OrderedDict()
 
     # get the data and compute some things
     for ci, city in enumerate(cities):
@@ -90,12 +91,14 @@ def main(cities: dict, radius_m=20000,
         try:
             # blds = ox.buildings_from_place(city)
             blds = download_buildings_cached_for(city, cities, radius_m=radius_m)
+
         except TypeError:
             continue
 
         # blds.plot(facecolor="indigo", ax=ax)
 
         blds = blds.to_crs(crs_proj4)
+        city_to_blds[city] = blds
         minx, miny, maxx, maxy = blds.total_bounds
         city_to_extent[city] = [minx, maxx, miny, maxy]
 
@@ -111,7 +114,7 @@ def main(cities: dict, radius_m=20000,
 
     levels = np.arange(20, 40, 1)
     bn = BoundaryNorm(levels, len(levels) - 1)
-    cmap = cm.get_cmap("RdYlGn_r", len(levels) - 1)
+    cmap = cm.get_cmap("YlOrRd", len(levels) - 1)
 
     # plotting
     for ci, city in enumerate(cities):
@@ -134,7 +137,7 @@ def main(cities: dict, radius_m=20000,
         cb.ax.tick_params(labelsize=5)
         cb.ax.set_visible(city.lower() == "toronto")
 
-        ax.add_geometries(blds['geometry'], crs=crs, facecolor="k", edgecolor="none", linewidth=0, alpha=0.3)
+        ax.add_geometries(city_to_blds[city]['geometry'], crs=crs, facecolor="k", edgecolor="none", linewidth=0, alpha=0.3, zorder=20)
         ax.set_extent(city_to_extent[city], crs=projection)
 
         ax.get_xaxis().set_visible(False)
