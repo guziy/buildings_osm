@@ -73,7 +73,8 @@ def main(cities: dict, radius_m=20000,
 
     data_root = Path("/scratch/huziy/MODIS_hambourg/DAILY")
 
-    vname = "lst_night"
+    # vname = "lst_night"
+    vname = "lst_day"
 
     lons, lats, tmax_mean = calculate_annual_max_temperature(data_root=data_root, vname=vname)
 
@@ -114,7 +115,7 @@ def main(cities: dict, radius_m=20000,
     fig = plt.figure(figsize=(6, 6), frameon=False)
 
 
-    levels = np.arange(20, 40, 1)
+    levels = np.arange(20, 38, 2)
     bn = BoundaryNorm(levels, len(levels) - 1)
     cmap = cm.get_cmap("YlOrRd", len(levels) - 1)
 
