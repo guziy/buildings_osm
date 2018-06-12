@@ -17,7 +17,7 @@ from show_buildings import download_buildings_cached_for, add_river_shapes, rese
 import numpy as np
 
 
-def calculate_annual_max_temperature(data_root: Path):
+def calculate_annual_max_temperature(data_root: Path, vname="lst_day"):
     # calculate for each year
     data_list = []
     lons = None
@@ -31,7 +31,7 @@ def calculate_annual_max_temperature(data_root: Path):
         if not yr_dir.is_dir():
             continue
 
-        yr_max_cache = yr_dir / "max_cache.bin"
+        yr_max_cache = yr_dir / f"{vname}_max_cache.bin"
         if yr_max_cache.exists():
             print(f"Reusing cache from {yr_max_cache}")
             arr_data = pickle.load(yr_max_cache.open("rb"))
@@ -42,11 +42,11 @@ def calculate_annual_max_temperature(data_root: Path):
 
         with xarray.open_mfdataset(data_files_s, data_vars="minimal", coords="minimal") as ds:
 
-            print(ds["lst_day"])
+            print(ds[vname])
 
             # read in the data if it were not yet retrieved from cache
             if arr_data is None:
-                arr_data = ds["lst_day"].max(dim="time").to_masked_array().squeeze()
+                arr_data = ds[vname].max(dim="time").to_masked_array().squeeze()
 
                 #cache it for the next run
                 pickle.dump(arr_data, yr_max_cache.open("wb"))
@@ -73,7 +73,9 @@ def main(cities: dict, radius_m=20000,
 
     data_root = Path("/scratch/huziy/MODIS_hambourg/DAILY")
 
-    lons, lats, tmax_mean = calculate_annual_max_temperature(data_root=data_root)
+    vname = "lst_night"
+
+    lons, lats, tmax_mean = calculate_annual_max_temperature(data_root=data_root, vname=vname)
 
 
     # Define the CartoPy CRS object.
@@ -149,7 +151,7 @@ def main(cities: dict, radius_m=20000,
 
         ax.set_title(city, fontsize=5)
 
-    fig.savefig("cities_tmax.pdf", dpi=300, bbox_inches="tight")
+    fig.savefig(f"cities_tmax_{vname}.pdf", dpi=300, bbox_inches="tight")
 
 
 def test():
