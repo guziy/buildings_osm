@@ -146,7 +146,7 @@ def main(cities: dict, radius_m=20000,
 
         ax.set_title(city, fontsize=5)
 
-    fig.savefig("cities_tmax.png", dpi=300, bbox_inches="tight")
+    fig.savefig("cities_tmax.pdf", dpi=300, bbox_inches="tight")
 
 
 def test():
