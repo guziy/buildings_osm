@@ -128,7 +128,7 @@ def main(cities: dict, radius_m=20000,
         divider = make_axes_locatable(ax)
         ax_cb = divider.new_horizontal(size="5%", pad=0.1, axes_class=plt.Axes)
         fig.add_axes(ax_cb)
-        cb = plt.colorbar(cs, cax=ax_cb, extend="max")
+        cb = plt.colorbar(cs, cax=ax_cb, extend="both")
 
         cb.ax.tick_params(labelsize=10)
 
