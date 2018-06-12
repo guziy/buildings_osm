@@ -55,7 +55,6 @@ def calculate_annual_max_temperature(data_root: Path):
             data_list.append(
                 np.ma.masked_where(arr_data >= 200, arr_data)
             )
-            break
 
     # get the average over available years
     arr_mean = np.ma.mean(data_list, axis=0)
@@ -105,9 +104,9 @@ def main(cities: dict, radius_m=20000,
     fig = plt.figure(figsize=(6, 6), frameon=False)
 
 
-    levels = np.arange(20, 45, 0.5)
+    levels = np.arange(20, 45, 1)
     bn = BoundaryNorm(levels, len(levels) - 1)
-    cmap = cm.get_cmap("jet", len(levels) - 1)
+    cmap = cm.get_cmap("RdYlGn_r", len(levels) - 1)
 
     # plotting
     for ci, city in enumerate(cities):
@@ -128,6 +127,7 @@ def main(cities: dict, radius_m=20000,
         fig.add_axes(ax_cb)
         cb = plt.colorbar(cs, cax=ax_cb)
 
+        cb.ax.tick_params(labelsize=10)
 
         ax.set_extent(city_to_extent[city], crs=projection)
 
@@ -138,13 +138,29 @@ def main(cities: dict, radius_m=20000,
 
         add_river_shapes(ax, city, crs=ccrs.PlateCarree())
 
+
     fig.savefig("cities_tmax.png", dpi=300, bbox_inches="tight")
 
 
 def test():
+    # cities = OrderedDict([
+    #     ("Toronto", (43.653908, -79.384293)),
+    # ])
+
     cities = OrderedDict([
         ("Toronto", (43.653908, -79.384293)),
+        ("Montreal", (45.50884, -73.58781)),
+        ("Vancouver", (49.24966, -123.11934)),
+        ("Calgary", (51.05011, -114.08529)),
+        ("Edmonton", (53.55014, -113.46871)),
+        ("Ottawa-Gatineau", (45.41117, -75.69812)),
+        ("Winnipeg", (49.8844, -97.14704)),
+        ("Halifax", (44.64533, -63.57239)),
+        ("Saskatoon", (52.11679, -106.63452)),
+        ("Moncton", (46.090946, -64.790497)),
+        ("Charlottetown", (46.2389900, -63.1341400))
     ])
+
 
     main(cities=cities)
 
