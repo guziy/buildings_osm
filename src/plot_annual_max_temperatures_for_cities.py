@@ -1,3 +1,7 @@
+import matplotlib
+matplotlib.use("Agg")
+
+
 import pickle
 from collections import OrderedDict
 from pathlib import Path
@@ -118,7 +122,6 @@ def main(cities: dict, radius_m=20000,
 
         # Plot
         print(f"Plotting {city}")
-
 
         cs = ax.contourf(lons, lats, tmax_mean, levels=levels, norm=bn, cmap=cmap)
 
