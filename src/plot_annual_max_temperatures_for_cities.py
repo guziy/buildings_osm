@@ -25,7 +25,7 @@ def plot_total_field(lons, lats, the_field, label="", vname="lst_day", projectio
 
     fig = plt.figure()
     ax = plt.axes(projection=projection)
-    cs = ax.pcolormesh(lons, lats, the_field, crs=projection, cmap=cmap, norm=bn)
+    cs = ax.pcolormesh(lons, lats, the_field, transform=projection, cmap=cmap, norm=bn)
     plt.colorbar(cs, extend="both", ax=ax)
     fig.savefig(f"total_field_{vname}_{label}.png", bbox_inches="tight")
 
@@ -156,7 +156,7 @@ def main(cities: dict, radius_m=20000,
         #                  crs=ccrs.PlateCarree())
 
         cs = ax.pcolormesh(lons, lats, tmax_mean, norm=bn, cmap=cmap,
-                         crs=ccrs.PlateCarree())
+                         transform=ccrs.PlateCarree())
 
         divider = make_axes_locatable(ax)
         ax_cb = divider.new_horizontal(size="5%", pad=0.1, axes_class=plt.Axes)
