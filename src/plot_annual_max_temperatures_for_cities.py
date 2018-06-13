@@ -79,6 +79,17 @@ def main(cities: dict, radius_m=20000,
     lons, lats, tmax_mean = calculate_annual_max_temperature(data_root=data_root, vname=vname)
 
 
+    #plot the complete field
+    levels = np.arange(20, 38, 2)
+    bn = BoundaryNorm(levels, len(levels) - 1)
+    cmap = cm.get_cmap("YlOrRd", len(levels) - 1)
+
+    fig = plt.figure()
+    ax = fig.add_axes(projection=projection)
+    ax.contourf(lons, lats, tmax_mean, crs=projection, cmap=cmap, norm=bn)
+    fig.savefig(f"total_field_{vname}.png", bbox_inches="tight")
+
+
     # Define the CartoPy CRS object.
     crs = projection
     # This can be converted into a `proj4` string/dict compatible with GeoPandas
@@ -115,9 +126,6 @@ def main(cities: dict, radius_m=20000,
     fig = plt.figure(figsize=(6, 6), frameon=False)
 
 
-    levels = np.arange(20, 38, 2)
-    bn = BoundaryNorm(levels, len(levels) - 1)
-    cmap = cm.get_cmap("YlOrRd", len(levels) - 1)
 
     # plotting
     for ci, city in enumerate(cities):

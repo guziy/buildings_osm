@@ -27,18 +27,22 @@ def reset_extents(city_to_extent, r_max_x, r_max_y):
         city_to_extent[city] = new_ext
 
 
-def download_buildings_cached_for(city_name, cities_dict, radius_m):
+def download_buildings_cached_for(city_name, cities_dict, radius_m, load_in_memory=True):
     cache_dir = Path(__file__).parent.parent / "cache"
     cache_dir.mkdir(exist_ok=True)
 
     cache_file = cache_dir / f"{city_name}_{radius_m}.bin"
 
     if cache_file.exists():
+        if not load_in_memory:
+            return None
         return pickle.load(cache_file.open("rb"))
 
     blds = ox.buildings_from_point(cities_dict[city_name], radius_m, retain_invalid=True)
 
     pickle.dump(blds, cache_file.open("wb"))
+    if not load_in_memory:
+        return None
     return blds
 
 
@@ -91,10 +95,10 @@ def download_data():
         print(f"Downloading {city}")
         try:
             # blds = ox.buildings_from_place(city)
-            blds = download_buildings_cached_for(city, cities, radius_m=radius_m)
+            blds = download_buildings_cached_for(city, cities, radius_m=radius_m, load_in_memory=False)
         except TypeError:
             continue
-        del blds
+        # del blds
         # blds.plot(facecolor="indigo", ax=ax)
 
 
