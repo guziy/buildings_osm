@@ -25,7 +25,8 @@ def plot_total_field(lons, lats, the_field, label="", vname="lst_day", projectio
 
     fig = plt.figure()
     ax = plt.axes(projection=projection)
-    ax.contourf(lons, lats, the_field, crs=projection, cmap=cmap, norm=bn)
+    cs = ax.contourf(lons, lats, the_field, crs=projection, cmap=cmap, norm=bn)
+    plt.colorbar(cs)
     fig.savefig(f"total_field_{vname}_{label}.png", bbox_inches="tight")
 
 
