@@ -18,8 +18,11 @@ import numpy as np
 
 
 
+def get_levels():
+    return np.arange(26, 46, 2)
+
 def plot_total_field(lons, lats, the_field, label="", vname="lst_day", projection=ccrs.Miller()):
-    levels = np.arange(22, 46, 2)
+    levels = get_levels()
     bn = BoundaryNorm(levels, len(levels) - 1)
     cmap = cm.get_cmap("YlOrRd", len(levels) - 1)
 
@@ -66,7 +69,6 @@ def calculate_annual_max_temperature(data_root: Path, vname="lst_day"):
                 #cache it for the next run
                 pickle.dump(arr_data, yr_max_cache.open("wb"))
 
-
             if lons is None:
                 lons = ds["lon"].values
                 lats = ds["lat"].values
@@ -96,7 +98,7 @@ def main(cities: dict, radius_m=20000,
 
 
     #plot the complete field
-    levels = np.arange(20, 38, 2)
+    levels = get_levels()
     bn = BoundaryNorm(levels, len(levels) - 1)
     cmap = cm.get_cmap("YlOrRd", len(levels) - 1)
 
