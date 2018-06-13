@@ -59,7 +59,9 @@ def calculate_annual_max_temperature(data_root: Path, vname="lst_day"):
 
             # read in the data if it were not yet retrieved from cache
             if arr_data is None:
-                arr_data = ds[vname].max(dim="time").to_masked_array().squeeze()
+
+                x_arr_data = ds[vname]
+                arr_data = x_arr_data.where(x_arr_data < 200).max(dim="time", skipna=True).to_masked_array().squeeze()
 
                 #cache it for the next run
                 pickle.dump(arr_data, yr_max_cache.open("wb"))
