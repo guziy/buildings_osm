@@ -17,6 +17,18 @@ from show_buildings import download_buildings_cached_for, add_river_shapes, rese
 import numpy as np
 
 
+
+def plot_total_field(lons, lats, the_field, label="", vname="lst_day", projection=ccrs.Miller()):
+    levels = np.arange(20, 38, 2)
+    bn = BoundaryNorm(levels, len(levels) - 1)
+    cmap = cm.get_cmap("YlOrRd", len(levels) - 1)
+
+    fig = plt.figure()
+    ax = fig.add_axes(projection=projection)
+    ax.contourf(lons, lats, the_field, crs=projection, cmap=cmap, norm=bn)
+    fig.savefig(f"total_field_{vname}_{label}.png", bbox_inches="tight")
+
+
 def calculate_annual_max_temperature(data_root: Path, vname="lst_day"):
     # calculate for each year
     data_list = []
@@ -56,9 +68,10 @@ def calculate_annual_max_temperature(data_root: Path, vname="lst_day"):
                 lons = ds["lon"].values
                 lats = ds["lat"].values
 
-            data_list.append(
-                np.ma.masked_where(arr_data >= 200, arr_data)
-            )
+
+            arr_data_m = np.ma.masked_where(arr_data >= 200, arr_data)
+            plot_total_field(lons, lats, arr_data_m, label=f"{yr_dir.name}", vname=vname)
+            data_list.append(arr_data_m)
 
     # get the average over available years
     arr_mean = np.ma.mean(data_list, axis=0)
@@ -180,10 +193,10 @@ def test():
         ("Edmonton", (53.55014, -113.46871)),
         ("Ottawa-Gatineau", (45.41117, -75.69812)),
         ("Winnipeg", (49.8844, -97.14704)),
-        ("Halifax", (44.64533, -63.57239)),
+#        ("Halifax", (44.64533, -63.57239)),
         ("Saskatoon", (52.11679, -106.63452)),
-        ("Moncton", (46.090946, -64.790497)),
-        ("Charlottetown", (46.2389900, -63.1341400))
+#        ("Moncton", (46.090946, -64.790497)),
+#        ("Charlottetown", (46.2389900, -63.1341400))
     ])
 
 
