@@ -29,9 +29,6 @@ def plot_total_field(lons, lats, the_field, label="", vname="lst_day", projectio
     plt.colorbar(cs, extend="both", ax=ax)
     fig.savefig(f"total_field_{vname}_{label}.png", bbox_inches="tight")
 
-    if True:
-        raise Exception
-
 
 def calculate_annual_max_temperature(data_root: Path, vname="lst_day"):
     # calculate for each year
