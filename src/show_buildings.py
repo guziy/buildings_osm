@@ -90,9 +90,9 @@ def main():
         ("Charlottetown", (46.2389900, -63.1341400))
     ])
 
-    cities = OrderedDict([
-        ("Toronto", (43.653908, -79.384293)),
-    ])
+    # cities = OrderedDict([
+    #     ("Toronto", (43.653908, -79.384293)),
+    # ])
 
     # cities = ["city of Calgary, Alberta, Canada"]
 
