@@ -94,7 +94,7 @@ def download_data():
             blds = download_buildings_cached_for(city, cities, radius_m=radius_m)
         except TypeError:
             continue
-
+        del blds
         # blds.plot(facecolor="indigo", ax=ax)
 
 
