@@ -179,7 +179,7 @@ def test():
     ])
 
 
-    main(cities=cities)
+    main(cities=cities, radius_m=35000)
 
 
 if __name__ == '__main__':
