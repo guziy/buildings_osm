@@ -98,11 +98,7 @@ def main(cities: dict, radius_m=20000,
     bn = BoundaryNorm(levels, len(levels) - 1)
     cmap = cm.get_cmap("YlOrRd", len(levels) - 1)
 
-    fig = plt.figure()
-    ax = fig.add_axes(projection=projection)
-    ax.contourf(lons, lats, tmax_mean, crs=projection, cmap=cmap, norm=bn)
-    fig.savefig(f"total_field_{vname}.png", bbox_inches="tight")
-
+    plot_total_field(lons, lats, tmax_mean, label="2000-2016")
 
     # Define the CartoPy CRS object.
     crs = projection
