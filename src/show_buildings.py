@@ -68,6 +68,36 @@ def add_river_shapes(ax, city, crs=None):
                     ax.add_geometries(Reader(str(f)).geometries(), crs, **params)
 
 
+def download_data():
+    radius_m = 35000
+
+    # Coordinates taken from http://latitudelongitude.org/ca/
+    cities = OrderedDict([
+        ("Toronto", (43.653908, -79.384293)),
+        ("Montreal", (45.50884, -73.58781)),
+        ("Vancouver", (49.24966, -123.11934)),
+        ("Calgary", (51.05011, -114.08529)),
+        ("Edmonton", (53.55014, -113.46871)),
+        ("Ottawa-Gatineau", (45.41117, -75.69812)),
+        ("Winnipeg", (49.8844, -97.14704)),
+        ("Halifax", (44.64533, -63.57239)),
+        ("Saskatoon", (52.11679, -106.63452)),
+        ("Moncton", (46.090946, -64.790497)),
+        ("Charlottetown", (46.2389900, -63.1341400))
+    ])
+
+    # get the data and compute some things
+    for ci, city in enumerate(cities):
+        print(f"Downloading {city}")
+        try:
+            # blds = ox.buildings_from_place(city)
+            blds = download_buildings_cached_for(city, cities, radius_m=radius_m)
+        except TypeError:
+            continue
+
+        # blds.plot(facecolor="indigo", ax=ax)
+
+
 
 def main():
     ox.config(log_console=True)
@@ -174,4 +204,5 @@ def main():
         fig.savefig("buildings_by_point_11_dpi300.png", dpi=300, bbox_inches="tight")
 
 if __name__ == '__main__':
-    main()
+    download_data()
+    # main()
