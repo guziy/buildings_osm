@@ -73,7 +73,7 @@ def main():
     ox.config(log_console=True)
 
     river_shapes_path = "../canvec_1M_CA_Hydro_shp/canvec_1M_CA_Hydro/waterbody_2.shp"
-    radius_m = 20000
+    radius_m = 35000
 
     # Coordinates taken from http://latitudelongitude.org/ca/
     cities = OrderedDict([
