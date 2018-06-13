@@ -19,7 +19,7 @@ import numpy as np
 
 
 def plot_total_field(lons, lats, the_field, label="", vname="lst_day", projection=ccrs.Miller()):
-    levels = np.arange(20, 38, 2)
+    levels = np.arange(22, 46, 2)
     bn = BoundaryNorm(levels, len(levels) - 1)
     cmap = cm.get_cmap("YlOrRd", len(levels) - 1)
 
@@ -186,16 +186,16 @@ def test():
 
     cities = OrderedDict([
         ("Toronto", (43.653908, -79.384293)),
-        ("Montreal", (45.50884, -73.58781)),
-        ("Vancouver", (49.24966, -123.11934)),
-        ("Calgary", (51.05011, -114.08529)),
-        ("Edmonton", (53.55014, -113.46871)),
-        ("Ottawa-Gatineau", (45.41117, -75.69812)),
-        ("Winnipeg", (49.8844, -97.14704)),
-#        ("Halifax", (44.64533, -63.57239)),
-        ("Saskatoon", (52.11679, -106.63452)),
-#        ("Moncton", (46.090946, -64.790497)),
-#        ("Charlottetown", (46.2389900, -63.1341400))
+        # ("Montreal", (45.50884, -73.58781)),
+        # ("Vancouver", (49.24966, -123.11934)),
+        # ("Calgary", (51.05011, -114.08529)),
+        # ("Edmonton", (53.55014, -113.46871)),
+        # ("Ottawa-Gatineau", (45.41117, -75.69812)),
+        # ("Winnipeg", (49.8844, -97.14704)),
+        # ("Halifax", (44.64533, -63.57239)),
+        # ("Saskatoon", (52.11679, -106.63452)),
+        # ("Moncton", (46.090946, -64.790497)),
+        # ("Charlottetown", (46.2389900, -63.1341400))
     ])
 
 
