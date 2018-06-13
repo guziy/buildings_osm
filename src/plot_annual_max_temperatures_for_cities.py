@@ -131,7 +131,8 @@ def main(cities: dict, radius_m=20000,
         print(f"Plotting {city}")
         print(city_to_extent[city])
 
-        cs = ax.contourf(lons, lats, tmax_mean, levels=levels, norm=bn, cmap=cmap, extend="both")
+        cs = ax.contourf(lons, lats, tmax_mean, levels=levels, norm=bn, cmap=cmap, extend="both",
+                         crs=ccrs.PlateCarree())
 
         divider = make_axes_locatable(ax)
         ax_cb = divider.new_horizontal(size="5%", pad=0.1, axes_class=plt.Axes)
@@ -152,7 +153,7 @@ def main(cities: dict, radius_m=20000,
 
         ax.set_title(city, fontsize=5)
 
-    fig.savefig(f"cities_tmax_{vname}.pdf", dpi=300, bbox_inches="tight")
+    fig.savefig(f"cities_tmax_{vname}.png", dpi=300, bbox_inches="tight")
 
 
 def test():
