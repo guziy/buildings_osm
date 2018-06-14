@@ -30,6 +30,7 @@ def plot_total_field(lons, lats, the_field, label="", vname="lst_day", projectio
     ax = plt.axes(projection=projection)
     cs = ax.pcolormesh(lons, lats, the_field, transform=projection, cmap=cmap, norm=bn)
     plt.colorbar(cs, extend="both", ax=ax)
+    ax.set_title(label)
     fig.savefig(f"total_field_{vname}_{label}.png", bbox_inches="tight")
 
 
