@@ -167,7 +167,8 @@ def main(cities: dict, radius_m=20000,
         cb.ax.tick_params(labelsize=5)
         cb.ax.set_visible(col == 0 and row == 0)
 
-        ax.add_geometries(city_to_blds[city]['geometry'], crs=crs, facecolor="k", edgecolor="none", linewidth=0, zorder=20)
+        ax.add_geometries(city_to_blds[city]['geometry'], crs=crs, facecolor="k", edgecolor="none", linewidth=0, zorder=20,
+                          alpha=0.5)
         ax.set_extent(city_to_extent[city], crs=projection)
 
         ax.get_xaxis().set_visible(False)
