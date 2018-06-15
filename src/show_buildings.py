@@ -61,7 +61,7 @@ def add_river_shapes(ax, city, crs=None):
         "Saskatoon": "SK",
         "Moncton": "NB",
         "Charlottetown": "PE",
-        "Saint John": "NL"
+        "Saint John": "NB"
 
     }
 
