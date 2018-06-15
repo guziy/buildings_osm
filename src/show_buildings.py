@@ -87,7 +87,8 @@ def download_data():
         ("Halifax", (44.64533, -63.57239)),
         ("Saskatoon", (52.11679, -106.63452)),
         ("Moncton", (46.090946, -64.790497)),
-        ("Charlottetown", (46.2389900, -63.1341400))
+        ("Charlottetown", (46.2389900, -63.1341400)),
+        ("Saint John", (45.273918, -66.067657))
     ])
 
     # get the data and compute some things
@@ -121,7 +122,8 @@ def main():
         ("Halifax", (44.64533, -63.57239)),
         ("Saskatoon", (52.11679, -106.63452)),
         ("Moncton", (46.090946, -64.790497)),
-        ("Charlottetown", (46.2389900, -63.1341400))
+        ("Charlottetown", (46.2389900, -63.1341400)),
+
     ])
 
     # cities = OrderedDict([
