@@ -180,7 +180,7 @@ def main(cities: dict, radius_m=20000,
 
         ax.set_title(city, fontsize=5)
 
-    fig.savefig(f"cities_tmax_{vname}_{radius_m}m.pdf", dpi=300, bbox_inches="tight")
+    fig.savefig(f"cities_tmax_{vname}_{radius_m}m.png", dpi=300, bbox_inches="tight")
 
 
 def test():
@@ -199,7 +199,8 @@ def test():
         ("Halifax", (44.64533, -63.57239)),
         ("Saskatoon", (52.11679, -106.63452)),
         ("Moncton", (46.090946, -64.790497)),
-        ("Charlottetown", (46.2389900, -63.1341400))
+        ("Charlottetown", (46.2389900, -63.1341400)),
+        ("Saint John", (45.273918, -66.067657))
     ])
 
 
