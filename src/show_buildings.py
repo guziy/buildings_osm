@@ -60,7 +60,8 @@ def add_river_shapes(ax, city, crs=None):
         "Halifax": "NS",
         "Saskatoon": "SK",
         "Moncton": "NB",
-        "Charlottetown": "PE"
+        "Charlottetown": "PE",
+        "Saint John": "NL"
 
     }
 
