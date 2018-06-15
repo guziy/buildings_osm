@@ -61,7 +61,7 @@ def add_river_shapes(ax, city, crs=None):
         "Saskatoon": "SK",
         "Moncton": "NB",
         "Charlottetown": "PE",
-        "Saint John": "NB"
+        "Saint John": "NL"
 
     }
 
@@ -89,7 +89,7 @@ def download_data():
         ("Saskatoon", (52.11679, -106.63452)),
         ("Moncton", (46.090946, -64.790497)),
         ("Charlottetown", (46.2389900, -63.1341400)),
-        ("Saint John", (47.560539, -52.712830))
+        ("Saint John NL", (47.560539, -52.712830))
     ])
 
     # get the data and compute some things
